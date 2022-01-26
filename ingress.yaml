@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+  name: node-hostname
+  labels:
+    name: node-hostname
+spec:
+  rules:
+  - host: host.foo.bar
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: node-hostname
+            port: 
+              number: 3000
+  tls:
+  - hosts:
+    - host.foo.bar
+    secretName: node-hostname-prod-crd
